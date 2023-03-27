@@ -32,6 +32,6 @@
         android:background="@drawable/picture_btn_bottom_selector"
         android:gravity="center"
         android:text="@string/picture_know"
-        android:textColor="@color/picture_color_9b"
+        android:textColor="@color/picture_color_white"
         android:textStyle="bold" />
 </LinearLayout>
