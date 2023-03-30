@@ -576,20 +576,20 @@ public final class LocalMediaPageLoader extends IBridgeMediaLoader {
     }
 
     private String getPageSelection(long bucketId) {
-        String durationCondition = getDurationCondition();
-        String sizeCondition = getFileSizeCondition();
+        //String durationCondition = getDurationCondition();
+        //String sizeCondition = getFileSizeCondition();
         String queryMimeCondition = getQueryMimeCondition();
         switch (config.chooseMode) {
             case PictureConfig.TYPE_ALL:
                 //  Gets the all
-                return getPageSelectionArgsForAllMediaCondition(bucketId, queryMimeCondition, durationCondition, sizeCondition);
+                return getPageSelectionArgsForAllMediaCondition(bucketId, queryMimeCondition, "", "");
             case PictureConfig.TYPE_IMAGE:
                 // Gets the image of the specified type
-                return getPageSelectionArgsForImageMediaCondition(bucketId, queryMimeCondition, sizeCondition);
+                return getPageSelectionArgsForImageMediaCondition(bucketId, queryMimeCondition, "");
             case PictureConfig.TYPE_VIDEO:
             case PictureConfig.TYPE_AUDIO:
                 //  Gets the video or audio
-                return getPageSelectionArgsForVideoOrAudioMediaCondition(bucketId, queryMimeCondition, durationCondition, sizeCondition);
+                return getPageSelectionArgsForVideoOrAudioMediaCondition(bucketId, queryMimeCondition, "", "");
         }
         return null;
     }
@@ -661,7 +661,9 @@ public final class LocalMediaPageLoader extends IBridgeMediaLoader {
         switch (config.chooseMode) {
             case PictureConfig.TYPE_ALL:
                 // Get all, not including audio
-                return getSelectionArgsForAllMediaCondition(getDurationCondition(), fileSizeCondition, queryMimeCondition);
+                //return getSelectionArgsForAllMediaCondition(getDurationCondition(), fileSizeCondition, queryMimeCondition);
+            return getSelectionArgsForAllMediaCondition("", "", queryMimeCondition);
+
             case PictureConfig.TYPE_IMAGE:
                 // Get Images
                 return getSelectionArgsForImageMediaCondition(queryMimeCondition, fileSizeCondition);
