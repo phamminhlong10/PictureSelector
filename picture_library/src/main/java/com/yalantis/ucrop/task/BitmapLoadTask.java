@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -180,12 +181,25 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
     }
 
     private String getFilePath() {
-        if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
-                == PackageManager.PERMISSION_GRANTED) {
-            return PictureFileUtils.getPath(mContext, mInputUri);
-        } else {
-            return "";
+        if(Build.VERSION.SDK_INT < 33){
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                return PictureFileUtils.getPath(mContext, mInputUri);
+            } else {
+                return "";
+            }
+        }else{
+            if (ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_MEDIA_IMAGES)
+                    == PackageManager.PERMISSION_GRANTED && 
+                    ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_MEDIA_VIDEO) == PackageManager.PERMISSION_GRANTED &&
+                    ContextCompat.checkSelfPermission(mContext, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+                    ) {
+                return PictureFileUtils.getPath(mContext, mInputUri);
+            } else {
+                return "";
+            }
         }
+
     }
 
     private void copyFile(@NonNull Uri inputUri, @Nullable Uri outputUri) throws NullPointerException, IOException {

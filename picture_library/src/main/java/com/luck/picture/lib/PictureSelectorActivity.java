@@ -7,6 +7,7 @@ import android.content.res.ColorStateList;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.os.SystemClock;
@@ -131,13 +132,24 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
     protected void onResume() {
         super.onResume();
         if (isEnterSetting) {
-            if (PermissionChecker
-                            .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                if (mAdapter.isDataEmpty()) {
-                    readLocalMedia();
+            if(Build.VERSION.SDK_INT < 33){
+                if (PermissionChecker
+                        .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    if (mAdapter.isDataEmpty()) {
+                        readLocalMedia();
+                    }
+                } else {
+                    showPermissionsDialog(false, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, getString(R.string.picture_jurisdiction));
                 }
-            } else {
-                showPermissionsDialog(false, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, getString(R.string.picture_jurisdiction));
+            }else{
+                if (PermissionChecker
+                        .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) && PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) && PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)) {
+                    if (mAdapter.isDataEmpty()) {
+                        readLocalMedia();
+                    }
+                } else {
+                    showPermissionsDialog(false, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO}, getString(R.string.picture_jurisdiction));
+                }
             }
             isEnterSetting = false;
         }
@@ -318,12 +330,22 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
      * load All Data
      */
     private void loadAllMediaData() {
-        if (PermissionChecker
-                .checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            readLocalMedia();
-        } else {
-            PermissionChecker.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PictureConfig.APPLY_STORAGE_PERMISSIONS_CODE);
+        if(Build.VERSION.SDK_INT < 33){
+            if (PermissionChecker
+                    .checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                readLocalMedia();
+            }else{
+                PermissionChecker.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PictureConfig.APPLY_STORAGE_PERMISSIONS_CODE);
+            }
         }
+        else{
+            if(PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) && PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO)){
+                readLocalMedia(); 
+            }else{
+            PermissionChecker.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO}, PictureConfig.APPLY_READ_MEDIA_IMAGES_CODE);
+            }
+        }
+
     }
 
     @Override
@@ -2406,6 +2428,14 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
                 } else {
                     showPermissionsDialog(false, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE,
                             Manifest.permission.WRITE_EXTERNAL_STORAGE}, getString(R.string.picture_jurisdiction));
+                }
+                break;
+            case PictureConfig.APPLY_READ_MEDIA_IMAGES_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    readLocalMedia();
+                } else {
+                    showPermissionsDialog(false, new String[]{Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                            }, getString(R.string.picture_jurisdiction));
                 }
                 break;
         }

@@ -143,8 +143,6 @@ public class MediaUtils {
             mediaExtraInfo.setDuration(ValueOf.toLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)));
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            retriever.release();
         }
         return mediaExtraInfo;
     }
@@ -168,8 +166,6 @@ public class MediaUtils {
             mediaExtraInfo.setDuration(ValueOf.toLong(retriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION)));
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            retriever.release();
         }
         return mediaExtraInfo;
     }
