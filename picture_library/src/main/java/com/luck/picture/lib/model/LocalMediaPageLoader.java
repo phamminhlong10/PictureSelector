@@ -330,7 +330,7 @@ public final class LocalMediaPageLoader extends IBridgeMediaLoader {
                                         // If you set the minimum number of seconds of video to display
                                         continue;
                                     }
-                                    if (config.videoMaxSecond > 0 && duration > config.videoMaxSecond) {
+                                    if (config.videoMaxSecond > 0) {
                                         // If you set the maximum number of seconds of video to display
                                         continue;
                                     }
