@@ -478,7 +478,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .imageSpanCount(4)// 每行显示个数
                         //.queryFileSize() // 过滤最大资源,已废弃
                         //.filterMinFileSize(5)// 过滤最小资源，单位kb
-                        //.filterMaxFileSize()// 过滤最大资源，单位kb
+                        .filterMaxFileSize(102400)// 过滤最大资源，单位kb
                         .isReturnEmpty(false)// 未选择数据时点击按钮是否可以返回
                         .isAndroidQTransform(true)// 是否需要处理Android Q 拷贝至应用沙盒的操作，只针对compress(false); && .isEnableCrop(false);有效,默认处理
                         .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)// 设置相册Activity方向，不设置默认使用系统
@@ -537,7 +537,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         .selectionData(mAdapter.getData())// 是否传入已选图片
                         //.isDragFrame(false)// 是否可拖动裁剪框(固定)
                         //.videoMinSecond(10)// 查询多少秒以内的视频
-                        //.videoMaxSecond(15)// 查询多少秒以内的视频
+                        .videoMaxSecond(60)// 查询多少秒以内的视频
                         //.recordVideoSecond(10)//录制视频秒数 默认60s
                         //.isPreviewEggs(true)// 预览图片时 是否增强左右滑动图片体验(图片滑动一半即可看到上一张是否选中)
                         //.cropCompressQuality(90)// 注：已废弃 改用cutOutQuality()

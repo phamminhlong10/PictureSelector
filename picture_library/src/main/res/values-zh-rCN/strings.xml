@@ -63,6 +63,7 @@
     <string name="picture_data_null">这里空空如也…</string>
     <string name="picture_editor">编辑</string>
     <string name="picture_webp_tag">webp</string>
+    <string name="picture_choose_limit_size">您不能選擇超過 %1$dMB 的視頻</string>
 
     <string name="ucrop_rotate">旋转</string>
     <string name="ucrop_scale">比例</string>

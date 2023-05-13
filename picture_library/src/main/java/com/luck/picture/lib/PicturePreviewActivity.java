@@ -25,6 +25,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.PictureSelectionConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.entity.LocalMediaFolder;
+import com.luck.picture.lib.language.LanguageConfig;
 import com.luck.picture.lib.listener.OnQueryDataResultListener;
 import com.luck.picture.lib.manager.UCropManager;
 import com.luck.picture.lib.model.LocalMediaPageLoader;
@@ -860,7 +861,20 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
                     if (!check.isSelected() && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
                         // 视频时长超过了指定的长度
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                            return;
+                        }
                         showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                        return;
+                    }
+                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                        // 视频时长超过了指定的长度
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                            return;
+                        }
+                        showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                         return;
                     }
                 } else {
@@ -893,7 +907,20 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
                     if (!check.isSelected() && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
                         // 视频时长超过了指定的长度
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                            return;
+                        }
                         showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                        return;
+                    }
+                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                        // 视频时长超过了指定的长度
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                            return;
+                        }
+                        showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                         return;
                     }
                 } else {
@@ -910,7 +937,20 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
 
                         if (!check.isSelected() && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
                             // 视频时长超过了指定的长度
+                            if(config.language == LanguageConfig.KOREA){
+                                showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                                return;
+                            }
                             showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                            return;
+                        }
+                        if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                            // 视频时长超过了指定的长度
+                            if(config.language == LanguageConfig.KOREA){
+                                showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                                return;
+                            }
+                            showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                             return;
                         }
                     }

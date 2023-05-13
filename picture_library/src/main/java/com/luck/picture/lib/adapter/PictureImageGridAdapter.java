@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.config.PictureSelectionConfig;
 import com.luck.picture.lib.dialog.PictureCustomDialog;
 import com.luck.picture.lib.entity.LocalMedia;
+import com.luck.picture.lib.language.LanguageConfig;
 import com.luck.picture.lib.listener.OnPhotoSelectChangedListener;
 import com.luck.picture.lib.tools.AnimUtils;
 import com.luck.picture.lib.tools.AttrsUtils;
@@ -315,7 +317,19 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                         }
                         if (config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
                             // The length of the video exceeds the specified length
+                            if(config.language == LanguageConfig.KOREA){
+                                showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                                return;
+                            }
                             showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                            return;
+                        }
+                        if(image.getSize() > config.filterMaxFileSize){
+                            if(config.language == LanguageConfig.KOREA){
+                                showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                                return;
+                            }
+                            showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                             return;
                         }
                     }
@@ -595,7 +609,19 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 if (!isChecked && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
+                    if(config.language == LanguageConfig.KOREA){
+                        showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                        return;
+                    }
                     showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                    return;
+                }
+                if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                    if(config.language == LanguageConfig.KOREA){
+                        showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                        return;
+                    }
+                    showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                     return;
                 }
             } else {
@@ -623,7 +649,19 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                 }
 
                 if (!isChecked && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
+                    if(config.language == LanguageConfig.KOREA){
+                        showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                        return;
+                    }
                     showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                    return;
+                }
+                if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                    if(config.language == LanguageConfig.KOREA){
+                        showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                        return;
+                    }
+                    showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                     return;
                 }
             } else {
@@ -638,7 +676,19 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
 
                     if (!isChecked && config.videoMaxSecond > 0 && image.getDuration() > config.videoMaxSecond) {
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
+                            return;
+                        }
                         showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
+                        return;
+                    }
+                    if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                        if(config.language == LanguageConfig.KOREA){
+                            showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond));
+                            return;
+                        }
+                        showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
                         return;
                     }
                 }

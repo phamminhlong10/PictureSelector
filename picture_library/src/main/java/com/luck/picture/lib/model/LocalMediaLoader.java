@@ -216,14 +216,14 @@ public final class LocalMediaLoader extends IBridgeMediaLoader {
                                 }
 
                                 if (PictureMimeType.isHasVideo(mimeType)) {
-                                    if (config.videoMinSecond > 0 && duration < config.videoMinSecond) {
-                                        // If you set the minimum number of seconds of video to display
-                                        continue;
-                                    }
-                                    if (config.videoMaxSecond > 0 && duration > config.videoMaxSecond) {
-                                        // If you set the maximum number of seconds of video to display
-                                        continue;
-                                    }
+//                                    if (config.videoMinSecond > 0 && duration < config.videoMinSecond) {
+//                                        // If you set the minimum number of seconds of video to display
+//                                        continue;
+//                                    }
+//                                    if (config.videoMaxSecond > 0 && duration > config.videoMaxSecond) {
+//                                        // If you set the maximum number of seconds of video to display
+//                                        continue;
+//                                    }
                                     if (duration == 0) {
                                         //If the length is 0, the corrupted video is processed and filtered out
                                         continue;
@@ -394,7 +394,7 @@ public final class LocalMediaLoader extends IBridgeMediaLoader {
      * @return
      */
     private String getDurationCondition() {
-        long maxS = config.videoMaxSecond == 0 ? Long.MAX_VALUE : config.videoMaxSecond;
+        long maxS = Long.MAX_VALUE;
         return String.format(Locale.CHINA, "%d <%s " + MediaStore.MediaColumns.DURATION + " and " + MediaStore.MediaColumns.DURATION + " <= %d",
                 Math.max((long) 0, config.videoMinSecond),
                 Math.max((long) 0, config.videoMinSecond) == 0 ? "" : "=",
@@ -407,7 +407,7 @@ public final class LocalMediaLoader extends IBridgeMediaLoader {
      * @return
      */
     private String getFileSizeCondition() {
-        long maxS = config.filterMaxFileSize == 0 ? Long.MAX_VALUE : config.filterMaxFileSize;
+        long maxS = Long.MAX_VALUE;
         return String.format(Locale.CHINA, "%d <%s " + MediaStore.MediaColumns.SIZE + " and " + MediaStore.MediaColumns.SIZE + " <= %d",
                 Math.max(0, config.filterMinFileSize),
                 Math.max(0, config.filterMinFileSize) == 0 ? "" : "=",
