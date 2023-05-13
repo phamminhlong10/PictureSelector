@@ -868,7 +868,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                         showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                         return;
                     }
-                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize() && config.filterMaxFileSize > 0) {
                         // 视频时长超过了指定的长度
                         if(config.language == LanguageConfig.KOREA){
                             showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
@@ -914,7 +914,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                         showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                         return;
                     }
-                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                    if (!check.isSelected() && config.filterMaxFileSize > image.getSize() && config.filterMaxFileSize > 0) {
                         // 视频时长超过了指定的长度
                         if(config.language == LanguageConfig.KOREA){
                             showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
@@ -944,7 +944,7 @@ public class PicturePreviewActivity extends PictureBaseActivity implements
                             showPromptDialog(getContext().getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                             return;
                         }
-                        if (!check.isSelected() && config.filterMaxFileSize > image.getSize()) {
+                        if (!check.isSelected() && config.filterMaxFileSize > image.getSize() && config.filterMaxFileSize > 0) {
                             // 视频时长超过了指定的长度
                             if(config.language == LanguageConfig.KOREA){
                                 showPromptDialog(getContext().getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));

@@ -324,7 +324,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                             showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                             return;
                         }
-                        if(image.getSize() > config.filterMaxFileSize){
+                        if(image.getSize() > config.filterMaxFileSize && config.filterMaxFileSize > 0){
                             if(config.language == LanguageConfig.KOREA){
                                 showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
                                 return;
@@ -616,7 +616,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                     showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                     return;
                 }
-                if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                if(image.getSize() > config.filterMaxFileSize && !isChecked && config.filterMaxFileSize > 0){
                     if(config.language == LanguageConfig.KOREA){
                         showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
                         return;
@@ -656,7 +656,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                     showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                     return;
                 }
-                if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                if(image.getSize() > config.filterMaxFileSize && !isChecked && config.filterMaxFileSize > 0){
                     if(config.language == LanguageConfig.KOREA){
                         showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond/1000));
                         return;
@@ -683,7 +683,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                         showPromptDialog(context.getString(R.string.picture_choose_max_seconds, config.videoMaxSecond / 1000));
                         return;
                     }
-                    if(image.getSize() > config.filterMaxFileSize && !isChecked){
+                    if(image.getSize() > config.filterMaxFileSize && !isChecked && config.filterMaxFileSize > 0){
                         if(config.language == LanguageConfig.KOREA){
                             showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond));
                             return;
