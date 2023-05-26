@@ -66,7 +66,7 @@
     <string name="picture_choose_limit_size">해당 콘텐츠는 %1$dMB 또는 %2$d초 초과로 업로드할 수 없습니다.</string>
     <string name="ucrop_rotate">회전</string>
     <string name="ucrop_scale">비례</string>
-    <string name="ucrop_crop">Crop</string>
+    <string name="ucrop_crop">편집</string>
 
     <string name="ucrop_label_edit_photo">사진 편집</string>
     <string name="ucrop_label_original">원본</string>
