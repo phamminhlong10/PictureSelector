@@ -125,8 +125,8 @@ public class UCropActivity extends AppCompatActivity {
     private int mToolbarWidgetColor;
     @ColorInt
     private int mRootViewBackgroundColor;
-    //@DrawableRes
-    //private int mToolbarCancelDrawable;
+    @DrawableRes
+    private int mToolbarCancelDrawable;
     @DrawableRes
     private int mToolbarCropDrawable;
     private int mLogoColor;
@@ -429,7 +429,7 @@ public class UCropActivity extends AppCompatActivity {
         mActiveControlsWidgetColor = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_COLOR_CONTROLS_WIDGET_ACTIVE, ContextCompat.getColor(this, R.color.ucrop_color_active_controls_color));
 
         mToolbarWidgetColor = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_WIDGET_COLOR_TOOLBAR, ContextCompat.getColor(this, R.color.ucrop_color_toolbar_widget));
-        //mToolbarCancelDrawable = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_WIDGET_CANCEL_DRAWABLE, R.drawable.ucrop_ic_cross);
+        mToolbarCancelDrawable = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_WIDGET_CANCEL_DRAWABLE, R.drawable.ucrop_ic_cross);
         mToolbarCropDrawable = intent.getIntExtra(UCrop.Options.EXTRA_UCROP_WIDGET_CROP_DRAWABLE, R.drawable.ucrop_ic_done);
         mToolbarTitle = intent.getStringExtra(UCrop.Options.EXTRA_UCROP_TITLE_TEXT_TOOLBAR);
         mToolbarTitle = mToolbarTitle != null ? mToolbarTitle : getResources().getString(R.string.ucrop_label_edit_photo);
@@ -486,10 +486,10 @@ public class UCropActivity extends AppCompatActivity {
         toolbarTitle.setText(mToolbarTitle);
 
         // Color buttons inside the Toolbar
-        //Drawable stateButtonDrawable = AppCompatResources.getDrawable(this, mToolbarCancelDrawable).mutate();
+        Drawable stateButtonDrawable = AppCompatResources.getDrawable(this, mToolbarCancelDrawable).mutate();
         ColorFilter colorFilter = BlendModeColorFilterCompat.createBlendModeColorFilterCompat(mToolbarWidgetColor, BlendModeCompat.SRC_ATOP);
-        //stateButtonDrawable.setColorFilter(colorFilter);
-        //toolbar.setNavigationIcon(stateButtonDrawable);
+        stateButtonDrawable.setColorFilter(colorFilter);
+        toolbar.setNavigationIcon(stateButtonDrawable);
         setSupportActionBar(toolbar);
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
