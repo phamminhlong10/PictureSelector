@@ -31,6 +31,7 @@
         android:layout_height="50dp"
         android:background="@drawable/picture_btn_bottom_selector"
         android:gravity="center"
+        android:layout_marginHorizontal="16dp"
         android:text="@string/picture_know"
         android:textColor="@color/picture_color_white"
         android:textStyle="bold" />
