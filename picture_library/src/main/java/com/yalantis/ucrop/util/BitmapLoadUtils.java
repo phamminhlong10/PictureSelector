@@ -1,11 +1,13 @@
 package com.yalantis.ucrop.util;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Point;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
 import android.view.WindowManager;
@@ -19,6 +21,7 @@ import com.yalantis.ucrop.callback.BitmapLoadCallback;
 import com.yalantis.ucrop.task.BitmapLoadTask;
 
 import java.io.Closeable;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.concurrent.Executors;
@@ -69,15 +72,24 @@ public class BitmapLoadUtils {
     }
 
     public static int getExifOrientation(@NonNull Context context, @NonNull Uri imageUri) {
-        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
-        try {
-            InputStream stream = PictureContentResolver.getContentResolverOpenInputStream(context, imageUri);
-            if (stream == null) {
-                return orientation;
-            }
-            orientation = new ImageHeaderParser(stream).getOrientation();
-        } catch (IOException e) {
-            Log.e(TAG, "getExifOrientation: " + imageUri.toString(), e);
+//        int orientation = ExifInterface.ORIENTATION_UNDEFINED;
+//        try {
+//            InputStream stream = PictureContentResolver.getContentResolverOpenInputStream(context, imageUri);
+//            if (stream == null) {
+//                return orientation;
+//            }
+//            orientation = new ImageHeaderParser(stream).getOrientation();
+//            Log.e(TAG, "getExifOrientation: " + orientation);
+//        } catch (IOException e) {
+//            Log.e(TAG, "getExifOrientation: " + imageUri.toString(), e);
+//        }
+//        return orientation;
+
+        String[] orientationColumn = {MediaStore.Images.Media.ORIENTATION};
+        Cursor cur = context.getContentResolver().query(imageUri, orientationColumn, null, null, null);
+        int orientation = -1;
+        if (cur != null && cur.moveToFirst()) {
+            orientation = cur.getInt(cur.getColumnIndex(orientationColumn[0]));
         }
         return orientation;
     }

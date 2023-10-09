@@ -5,9 +5,12 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -111,8 +114,14 @@ public class BitmapLoadTask extends AsyncTask<Void, Void, BitmapLoadTask.BitmapW
         boolean decodeAttemptSuccess = false;
         while (!decodeAttemptSuccess) {
             try {
-                InputStream stream = PictureContentResolver.getContentResolverOpenInputStream(mContext, mInputUri);
-                decodeSampledBitmap = BitmapFactory.decodeStream(stream, null, options);
+//                InputStream stream = PictureContentResolver.getContentResolverOpenInputStream(mContext, mInputUri);
+//                decodeSampledBitmap = BitmapFactory.decodeStream(stream);
+                if(Build.VERSION.SDK_INT < 28) {
+                    decodeSampledBitmap = MediaStore.Images.Media.getBitmap(mContext.getContentResolver(), mInputUri);
+                } else {
+                    ImageDecoder.Source source = ImageDecoder.createSource(mContext.getContentResolver(), mInputUri);
+                    decodeSampledBitmap = ImageDecoder.decodeBitmap(source);
+                }
                 if (options.outWidth == -1 || options.outHeight == -1) {
                     return new BitmapWorkerResult(new IllegalArgumentException("Bounds for bitmap could not be retrieved from the Uri: [" + mInputUri + "]"));
                 }
