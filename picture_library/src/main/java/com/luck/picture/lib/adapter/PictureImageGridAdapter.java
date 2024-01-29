@@ -685,7 +685,7 @@ public class PictureImageGridAdapter extends RecyclerView.Adapter<RecyclerView.V
                     }
                     if(image.getSize() > config.filterMaxFileSize && !isChecked && config.filterMaxFileSize > 0){
                         if(config.language == LanguageConfig.KOREA){
-                            showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond));
+                            showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576, config.videoMaxSecond / 1000));
                             return;
                         }
                         showPromptDialog(context.getString(R.string.picture_choose_limit_size, config.filterMaxFileSize / 1048576));
