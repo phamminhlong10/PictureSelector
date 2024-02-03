@@ -77,6 +77,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -112,6 +113,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
     private int allFolderSize;
     private int mOpenCameraCount;
 
+    private int currentFolderPosition = 0;
+    private OnAlbumItemClickListener onFolderItemClickListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +129,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
                 mAdapter.bindSelectData(selectionMedias);
             }
         }
+
+        onFolderItemClickListener = this;
 
     }
 
@@ -161,15 +166,18 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             }
         }
 
-        if (Build.VERSION.SDK_INT < 33) {
-            readLocalMedia();
-        } else {
-            if (PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_VIDEO) && PermissionChecker.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES)) {
-                if (mAdapter.isDataEmpty()) {
-                    readLocalMedia();
-                }
-            }
-        }
+        loadAllMediaData();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LocalMediaFolder rootFolder = folderWindow.getFolder(0);
+
+        final int lastFolderPosition = currentFolderPosition;
+
+        onFolderItemClickListener.onItemClick(0, false, rootFolder.getBucketId(), rootFolder.getName(), mAdapter.getData());
+        currentFolderPosition = lastFolderPosition;
     }
 
     @Override
@@ -1414,8 +1422,11 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
         long currentBucketId = ValueOf.toLong(mTvPictureTitle.getTag(R.id.view_tag));
         mTvPictureTitle.setTag(R.id.view_count_tag, folderWindow.getFolder(position) != null
                 ? folderWindow.getFolder(position).getImageNum() : 0);
+        currentFolderPosition = position;
         if (config.isPageStrategy) {
             if (currentBucketId != bucketId) {
+                Log.e("[][][]currentBucketId != bucketId", "currentBucketId != bucketId");
+
                 setLastCacheFolderData();
                 boolean isCurrentCacheFolderData = isCurrentCacheFolderData(position);
                 if (!isCurrentCacheFolderData) {
@@ -1441,6 +1452,8 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
                 }
             }
         } else {
+            Log.e("[][][]currentBucketId == bucketId", "currentBucketId == bucketId");
+
             mAdapter.bindData(data);
             mRecyclerView.smoothScrollToPosition(0);
         }
@@ -1474,7 +1487,6 @@ public class PictureSelectorActivity extends PictureBaseActivity implements View
             mPage = currentFolder.getCurrentDataPage();
             isHasMore = currentFolder.isHasMore();
             mRecyclerView.smoothScrollToPosition(0);
-
             return true;
         }
         return false;
